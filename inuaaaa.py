@@ -2,8 +2,11 @@ from selenium import webdriver
 import requests
 import time
 import json
+#url是登录获得cookie的url
 url="https://m.nuaa.edu.cn/uc/wap/login?redirect=https%3A%2F%2Fm.nuaa.edu.cn%2Fncov%2Fwap%2Fdefault%2Findex"
+#url2是发送数据的url
 url2="https://m.nuaa.edu.cn/ncov/wap/default/save"
+#serverjam是用来推送微信消息的url,个人使用需要绑定一下自己的微信,这个是绑定的我的微信
 serverjam="https://sc.ftqq.com/SCU114972T4c6e36e5d22020fa744018b929d04ffb5f6a9176526f4.send"
 data={
     "sfzhux": "0",
