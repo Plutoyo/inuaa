@@ -71,7 +71,7 @@ class inuaa():
             'Referer': 'https://m.nuaa.edu.cn/ncov/wap/default/index',
             'Sec-Fetch-Dest':'empty',
             'Sec-Fetch-Mode':'cors',
-            'Sec-Fetch-Site':'same-origin',
+            'Sec-Fetch-Site':'same-origin'
         }
 
     def connect(self):
