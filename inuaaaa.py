@@ -92,8 +92,6 @@ class inuaa():
         self.headers['Cookie']=self.headers['Cookie']%cookie['eai-sess']
         requests.post(url=url2, data=data, headers=self.headers)
         response=requests.post(url=url2,data=data,headers=self.headers)
-        # with open("res.html",mode='w') as f:
-        #     f.write(response.text)
         res=json.loads(response.text)
         if res["m"]=="操作成功":
             requests.post(serverjam,data={"text":"打卡成功"})
