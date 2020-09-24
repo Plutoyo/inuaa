@@ -59,9 +59,10 @@ data={
 }
 #时间戳" Hm_lvt_48b682d4885d22a90111e46b972e3268=1600774835; Hm_lpvt_48b682d4885d22a90111e46b972e3268=1600785537"
 class inuaa():
-    def __init__(self,id,pwd):
+    def __init__(self,id,pwd,push):
         self.id=id
         self.pwd=pwd
+        self.push=push
         self.headers={
             'User-Agent':"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36",
             'Cookie':'eai-sess=%s; UUkey=85868a72a5f464b39cc95b6a04037301;',
@@ -80,6 +81,7 @@ class inuaa():
         Chrome_options.add_argument('--headless')
         Chrome_options.add_argument('--disable-gpu')
         web=webdriver.Chrome(options=Chrome_options)
+        # web 可视化
         # web = webdriver.Chrome()
         web.get(url)
         time.sleep(3)
@@ -90,14 +92,26 @@ class inuaa():
         for i in web.get_cookies():
             cookie[i["name"]] = i["value"]
         self.headers['Cookie']=self.headers['Cookie']%cookie['eai-sess']
+        #第一次申请需要验证cookies,第二次再发送
         requests.post(url=url2, data=data, headers=self.headers)
         response=requests.post(url=url2,data=data,headers=self.headers)
-        # with open("res.html",mode='w') as f:
-        #     f.write(response.text)
-        res=json.loads(response.text)
-        if res["m"]=="操作成功":
-            requests.post(serverjam,data={"text":"打卡成功"})
-
+        try:
+            res=json.loads(response.text)
+            if res["m"]=="操作成功" and self.push==1:
+                requests.post(serverjam,data={"text":"%d打卡成功"%self.id})
+                # print("success")
+        except:
+            requests.post(serverjam, data={"text": "%d打卡失败" % self.id})
+            # print("error")
 if __name__=="__main__":
-    app=inuaa(161810332,'Qwe980418')
-    app.connect()
+    usrs=[]
+    with open("data.txt",'r') as f:
+        lines=f.readlines()
+    for line in lines:
+        line=line.strip()
+        info=line.split()
+        usr_id=int(info[0])
+        usr_pwd=info[1]
+        usr=inuaa(usr_id,usr_pwd,int(info[2]))
+        usr.connect()
+        usrs.append(usr)
