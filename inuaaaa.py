@@ -120,6 +120,6 @@ if __name__ == "__main__":
         info = line.split()
         usr_id = int(info[0])
         usr_pwd = info[1]
-        usr = inuaa(usr_id, usr_pwd, int(info[2]))
+        usr = iNuaa(usr_id, usr_pwd, int(info[2]))
         usr.connect()
         usrs.append(usr)
