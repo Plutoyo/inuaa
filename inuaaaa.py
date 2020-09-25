@@ -2,7 +2,9 @@ from selenium import webdriver
 import requests
 import time
 import json
-
+import os
+import sys
+path = os.path.dirname(sys.argv[0])
 # url是登录获得cookie的url
 url = "https://m.nuaa.edu.cn/uc/wap/login?redirect=https%3A%2F%2Fm.nuaa.edu.cn%2Fncov%2Fwap%2Fdefault%2Findex"
 # url2是发送数据的url
@@ -113,7 +115,7 @@ class iNuaa():
 
 if __name__ == "__main__":
     usrs = []
-    with open("data.txt", 'r') as f:
+    with open(path+"/data.txt", 'r') as f:
         lines = f.readlines()
     for line in lines:
         line = line.strip()
