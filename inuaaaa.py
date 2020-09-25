@@ -112,7 +112,6 @@ class iNuaa():
             requests.post(serverjam, data={"text": "%d打卡失败" % self.id})
             # print("error")
 
-
 if __name__ == "__main__":
     usrs = []
     with open(path+"/data.txt", 'r') as f:
